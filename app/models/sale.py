@@ -39,7 +39,7 @@ class SaleModel:
             for p_item in processed_items:
                 cursor.execute("""
                 
-                INSERT INTO sale_details(sale_id, product_id,quantity,unit_price, sutotal VALUES (?,?,?,?,?))
+                INSERT INTO sale_details(sale_id, product_id,quantity,unit_price, subtotal) VALUES (?,?,?,?,?)
 
                 """, (sale_id,p_item["product_id"],p_item["quantity"],p_item["unit_price"],p_item["subtotal"]))
 
@@ -62,12 +62,12 @@ class SaleModel:
             ORDER BY s.id DESC
             """)
 
-            sales = [dict(row) for row in cursor.fetchall]
+            sales = [dict(row) for row in cursor.fetchall()]
 
             for s in sales:
                 cursor.execute("""
 
-                SELECT sd.id, sd.product_id, p.name, as product_name, sd.quantity, sd.unit_price, sd.subtotal
+                SELECT sd.id, sd.product_id, p.name as product_name, sd.quantity, sd.unit_price, sd.subtotal
                 FROM sale_details sd
                 JOIN products p ON sd.product_id = p.id
                 WHERE sd.sale_id = ?
