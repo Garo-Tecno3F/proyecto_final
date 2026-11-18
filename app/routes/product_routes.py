@@ -21,7 +21,7 @@ def create_product(product: ProductCreate, db: sqlite3.Connection = Depends(get_
     return ProductController.create_product(db, product)
 
 @router.put("/{product_id}", response_model=ProductResponse)
-def update_product(product_id: int, product: ProductCreate, db: sqlite3.Connection = Depends(get_db_connection)):
+def update_product(product_id: int, product: ProductUpdate, db: sqlite3.Connection = Depends(get_db_connection)):
     return ProductController.update_product(db, product_id, product)
 
 @router.delete("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
